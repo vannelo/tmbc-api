@@ -1,11 +1,53 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import styles from "@/styles/Home.module.css";
+import { useEffect, useRef, useState } from "react";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const cityRef = useRef();
+  const stateRef = useRef();
+  const venueRef = useRef();
+  const dateRef = useRef();
+  const ticketsRef = useRef();
+  const ticketsVipRef = useRef();
+  const [shows, setShows] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/danna/tour")
+      .then((response) => response.json())
+      .then((data) => setShows(data));
+  }, []);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const show = {
+      city: cityRef.current.value,
+      state: stateRef.current.value,
+      venue: venueRef.current.value,
+      date: dateRef.current.value,
+      tickets: ticketsRef.current.value,
+      tickets_vip: ticketsVipRef.current.value,
+    };
+
+    let formBody = [];
+    for (const property in show) {
+      var encodedKey = encodeURIComponent(property);
+      var encodedValue = encodeURIComponent(show[property]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+
+    fetch("/api/danna/tour", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      },
+      body: formBody,
+    }).then((response) => console.log(response.body));
+  };
   return (
     <>
       <Head>
@@ -15,30 +57,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>pages/index.js</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
-          </div>
-        </div>
-
         <div className={styles.center}>
           <Image
             className={styles.logo}
@@ -58,66 +76,67 @@ export default function Home() {
             />
           </div>
         </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
+        <div className={styles.form}>
+          <h4>DANNA TOUR</h4>
+          <br></br>
+          {shows.length &&
+            shows.map((i) => (
+              <div key={i.id}>
+                {i.city} - {i.state} - {i.venue} - {i.date} -
+                <button>BORRAR</button>
+                <br></br>
+                <br></br>
+              </div>
+            ))}
+          <h4>AGREGAR SHOW</h4>
+          <br></br>
+          <form onSubmit={submitHandler}>
+            <input
+              type="text"
+              name="city"
+              placeholder="city"
+              ref={cityRef}
+              required
+            />
+            <input
+              type="text"
+              name="state"
+              placeholder="state"
+              ref={stateRef}
+              required
+            />
+            <input
+              type="text"
+              name="venue"
+              placeholder="venue"
+              ref={venueRef}
+              required
+            />
+            <input
+              type="text"
+              name="date"
+              placeholder="date"
+              ref={dateRef}
+              required
+            />
+            <input
+              type="text"
+              name="tickets"
+              placeholder="tickets"
+              ref={ticketsRef}
+              required
+            />
+            <input
+              type="text"
+              name="tickets_vip"
+              placeholder="tickets_vip"
+              ref={ticketsVipRef}
+              required
+            />
+            <button type="submit">CREAR SHOW</button>
+          </form>
         </div>
       </main>
     </>
-  )
+  );
 }
