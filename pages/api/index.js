@@ -14,10 +14,22 @@ const connection = mysql.createConnection({
 app.get("/api", (req, res) => {
   res.setHeader("Content-Type", "text/html");
   res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
   res.end("DANNA - HELLO WORLD");
 });
 
 app.get("/api/danna/tour", (req, res) => {
+  res.setHeader("Content-Type", "text/html");
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
   const query = "SELECT * FROM danna_tour";
   connection.query(query, (error, results) => {
     const shows = results;
@@ -30,6 +42,13 @@ app.get("/api/danna/tour", (req, res) => {
 });
 
 app.post("/api/danna/tour", (req, res) => {
+  res.setHeader("Content-Type", "text/html");
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
   const query = `INSERT INTO danna_tour (city, state, venue, date, tickets, tickets_vip) VALUES (?,?,?,?,?,?);`;
   const values = [
     req.body.city,
@@ -49,6 +68,13 @@ app.post("/api/danna/tour", (req, res) => {
 });
 
 app.delete("/api/danna/tour/:id", (req, res) => {
+  res.setHeader("Content-Type", "text/html");
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
   const query = `DELETE FROM danna_tour WHERE id = '${req.params.id}'`;
   connection.query(query, (error, result) => {
     if (error) {
