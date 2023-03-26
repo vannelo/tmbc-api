@@ -4,7 +4,7 @@
   align-items: center;
   flex-direction: column;
   text-align: center;
-  padding: 20px 0;
+  padding: 20px;
 }
 
 .title {
@@ -13,6 +13,15 @@
 .title h2 {
   font-family: tmbc-bold;
 }
+.subtitle {
+  width: 100%;
+  margin: 20px 0;
+}
+.subtitle h3 {
+  font-family: tmbc-bold;
+  text-align: left;
+}
+
 .button button {
   background-color: black;
   color: white;
@@ -23,7 +32,7 @@
 }
 
 .list {
-  min-width: 900px;
+  width: 70%;
   background-color: #eee;
   text-align: left;
   padding: 20px;
@@ -34,22 +43,71 @@
   display: flex;
   justify-content: space-between;
   font-size: 0.8rem;
-  padding: 10px;
+  padding: 4px;
 }
 
 .formBox {
   padding: 20px;
   background-color: #eee;
-  width: 100%;
-  max-width: 300px;
-  text-align: center;
+  width: 30%;
   border-radius: 10px;
+  text-align: left;
 }
 .formBox input {
   display: block;
   width: 100%;
   padding: 3px 10px;
   border: none;
-  margin-bottom: 10px;
-  text-align: center;
+  margin-bottom: 2px;
+  text-align: left;
+}
+.formBox label {
+  font-size: 14px;
+  padding: 4px 0;
+  display: block;
+}
+.formBox .button {
+  padding: 10px 0;
+  margin-top: 10px;
+}
+.formBox button {
+  width: 100%;
+  margin: 0;
+  padding: 10px;
+}
+
+.link {
+  display: block;
+  text-decoration: none;
+  color: black;
+  padding: 4px;
+}
+.link:hover {
+  text-decoration: underline;
+}
+.disabled {
+  color: gray;
+  cursor: initial;
+}
+.disabled:hover {
+  text-decoration: none;
+}
+
+.sectionContent {
+  width: 100%;
+  display: flex;
+  column-gap: 20px;
+}
+
+@media only screen and (max-width: 1000px) {
+  .sectionContent {
+    display: block;
+  }
+  .sectionContent .formBox {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .sectionContent .list {
+    width: 100%;
+  }
 }
