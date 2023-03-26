@@ -22,6 +22,7 @@ app.get("/api", (req, res) => {
   res.end("DANNA - HELLO WORLD");
 });
 
+// TOUR
 app.get("/api/danna/tour", (req, res) => {
   res.setHeader("Content-Type", "text/html");
   res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
@@ -40,7 +41,6 @@ app.get("/api/danna/tour", (req, res) => {
     }
   });
 });
-
 app.post("/api/danna/tour", (req, res) => {
   res.setHeader("Content-Type", "text/html");
   res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
@@ -66,7 +66,6 @@ app.post("/api/danna/tour", (req, res) => {
     }
   });
 });
-
 app.delete("/api/danna/tour/:id", (req, res) => {
   res.setHeader("Content-Type", "text/html");
   res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
@@ -81,6 +80,26 @@ app.delete("/api/danna/tour/:id", (req, res) => {
       res.status(500).json({ error });
     } else {
       res.end("DANNA - SHOW DELETED");
+    }
+  });
+});
+
+// FORO
+app.post("/api/danna/comments", (req, res) => {
+  res.setHeader("Content-Type", "text/html");
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  const query = `INSERT INTO danna_comments (author, comment, date) VALUES (?,?,?);`;
+  const values = [req.body.author, req.body.comment, req.body.date];
+  connection.query(query, values, (error, result) => {
+    if (error) {
+      res.status(500).json({ error });
+    } else {
+      res.end("DANNA - COMMENT ADDED");
     }
   });
 });
