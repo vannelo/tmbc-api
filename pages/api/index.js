@@ -85,6 +85,24 @@ app.delete("/api/danna/tour/:id", (req, res) => {
 });
 
 // FORO
+app.get("/api/danna/tour", (req, res) => {
+  res.setHeader("Content-Type", "text/html");
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  const query = "SELECT * FROM danna_comments";
+  connection.query(query, (error, results) => {
+    const shows = results;
+    if (error) {
+      res.status(500).json({ error });
+    } else {
+      res.json(shows);
+    }
+  });
+});
 app.post("/api/danna/comments", (req, res) => {
   res.setHeader("Content-Type", "text/html");
   res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
