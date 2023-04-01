@@ -22,6 +22,8 @@ app.get("/api", (req, res) => {
   res.end("DANNA - HELLO WORLD");
 });
 
+// DANNA
+
 // TOUR
 app.get("/api/danna/tour", (req, res) => {
   res.setHeader("Content-Type", "text/html");
@@ -118,6 +120,70 @@ app.post("/api/danna/comments", (req, res) => {
       res.status(500).json({ error });
     } else {
       res.end("DANNA - COMMENT ADDED");
+    }
+  });
+});
+
+// MOLOTOV
+
+// TOUR
+app.get("/api/molotov/tour", (req, res) => {
+  res.setHeader("Content-Type", "text/html");
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  const query = "SELECT * FROM molotov_tour";
+  connection.query(query, (error, results) => {
+    const shows = results;
+    if (error) {
+      res.status(500).json({ error });
+    } else {
+      res.json(shows);
+    }
+  });
+});
+app.post("/api/molotov/tour", (req, res) => {
+  res.setHeader("Content-Type", "text/html");
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  const query = `INSERT INTO molotov_tour (city, state, venue, date, tickets, tickets_vip) VALUES (?,?,?,?,?,?);`;
+  const values = [
+    req.body.city,
+    req.body.state,
+    req.body.venue,
+    req.body.date,
+    req.body.tickets,
+    req.body.tickets_vip,
+  ];
+  connection.query(query, values, (error, result) => {
+    if (error) {
+      res.status(500).json({ error });
+    } else {
+      res.end("MOLOTOV - SHOW ADDED");
+    }
+  });
+});
+app.delete("/api/molotov/tour/:id", (req, res) => {
+  res.setHeader("Content-Type", "text/html");
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  const query = `DELETE FROM molotov_tour WHERE id = '${req.params.id}'`;
+  connection.query(query, (error, result) => {
+    if (error) {
+      res.status(500).json({ error });
+    } else {
+      res.end("MOLOTOV - SHOW DELETED");
     }
   });
 });

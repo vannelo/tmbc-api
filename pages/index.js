@@ -30,7 +30,7 @@ export default function Home() {
           <Link href="/danna-paola/tour" className={styles.link}>
             Danna Paola
           </Link>
-          <Link href="/" className={`${styles.link} ${styles.disabled}`}>
+          <Link href="/molotov/tour" className={styles.link}>
             Molotov
           </Link>
           <Link href="/" className={`${styles.link} ${styles.disabled}`}>
