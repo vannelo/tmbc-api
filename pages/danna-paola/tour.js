@@ -140,7 +140,9 @@ export default function Tour() {
                     {show.venue}
                   </div>
                   <div className={styles.button}>
-                    <button onClick={() => updateHandler()}>EDITAR</button>
+                    <button onClick={() => updateHandler(show.id)}>
+                      EDITAR
+                    </button>
                     <button onClick={() => deleteHandler(show.id)}>
                       BORRAR
                     </button>
