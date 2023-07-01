@@ -68,7 +68,7 @@ app.post("/api/danna/tour", (req, res) => {
     }
   });
 });
-app.put("/api/danna/tour/update/:id", (req, res) => {
+app.patch("/api/danna/tour/update/:id", (req, res) => {
   res.setHeader("Content-Type", "text/html");
   res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
   res.header("Access-Control-Allow-Origin", "*");
