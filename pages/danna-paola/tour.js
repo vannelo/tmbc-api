@@ -69,6 +69,12 @@ export default function Tour() {
     });
   };
 
+  const updateHandler = () => {
+    fetch(`/api/danna/tour/update/66`, { method: "PATCH" }).then((response) => {
+      console.log(response);
+    });
+  };
+
   return (
     <>
       <Head>
@@ -132,6 +138,7 @@ export default function Tour() {
                     {show.venue}
                   </div>
                   <div className={styles.button}>
+                    <button onClick={() => updateHandler()}>EDITAR</button>
                     <button onClick={() => deleteHandler(show.id)}>
                       BORRAR
                     </button>
