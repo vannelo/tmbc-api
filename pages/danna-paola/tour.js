@@ -69,10 +69,12 @@ export default function Tour() {
     });
   };
 
-  const updateHandler = () => {
-    fetch(`/api/danna/tour/update/66`, { method: "PATCH" }).then((response) => {
-      console.log(response);
-    });
+  const updateHandler = (showId) => {
+    fetch(`/api/danna/tour/update/${showId}`, { method: "PATCH" }).then(
+      (response) => {
+        console.log(response);
+      }
+    );
   };
 
   return (

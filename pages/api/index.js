@@ -76,7 +76,7 @@ app.put("/api/danna/tour/update/:id", (req, res) => {
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
-  const query = `UPDATE danna_tour SET city = "prueba" WHERE id = '66'`;
+  const query = `UPDATE danna_tour SET city='prueba2' WHERE id = '${req.params.id}'`;
   connection.query(query, (error, result) => {
     if (error) {
       res.status(500).json({ error });
