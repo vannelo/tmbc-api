@@ -2,8 +2,11 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router";
 
 export default function Tour() {
+  const router = useRouter();
+  const { push } = router;
   const [shows, setShows] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const cityRef = useRef();
@@ -140,7 +143,9 @@ export default function Tour() {
                     {show.venue}
                   </div>
                   <div className={styles.button}>
-                    <button onClick={() => updateHandler(show.id)}>
+                    <button
+                      onClick={() => push(`/danna-paola/show/${show.id}`)}
+                    >
                       EDITAR
                     </button>
                     <button onClick={() => deleteHandler(show.id)}>

@@ -43,6 +43,24 @@ app.get("/api/danna/tour", (req, res) => {
     }
   });
 });
+app.get("/api/danna/tour/:id", (req, res) => {
+  res.setHeader("Content-Type", "text/html");
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  const query = `SELECT * FROM danna_tour WHERE id = '${req.params.id}'`;
+  connection.query(query, (error, results) => {
+    const shows = results;
+    if (error) {
+      res.status(500).json({ error });
+    } else {
+      res.json(shows);
+    }
+  });
+});
 app.post("/api/danna/tour", (req, res) => {
   res.setHeader("Content-Type", "text/html");
   res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
@@ -76,8 +94,16 @@ app.patch("/api/danna/tour/update/:id", (req, res) => {
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
-  const query = `UPDATE danna_tour SET city='prueba2' WHERE id = '${req.params.id}'`;
-  connection.query(query, (error, result) => {
+  const query = `UPDATE danna_tour SET city='${req.body.city}', state='${req.body.state}', venue='${req.body.venue}', date='${req.body.date}', tickets='${req.body.tickets}', tickets_vip='${req.body.tickets_vip}' WHERE id = '${req.params.id}'`;
+  const values = [
+    req.body.city,
+    req.body.state,
+    req.body.venue,
+    req.body.date,
+    req.body.tickets,
+    req.body.tickets_vip,
+  ];
+  connection.query(query, values, (error, result) => {
     if (error) {
       res.status(500).json({ error });
     } else {
